@@ -1,0 +1,5 @@
+.vscode
+build
+test/parser-test-1-generated.json
+test/parser-test-2-generated.json
+test/parser-test-3-generated.json
