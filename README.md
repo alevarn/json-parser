@@ -27,7 +27,7 @@ In this quick tutorial we will go through the following:
 
 ### Read a JSON file (of known structure) and print its contents
 Let's say we have a JSON file called **customers.json** that stores information about all our customers. 
-Down below you can see that the file contains information about two people James and John.
+Down below you can see that the file contains information about two people James Smith and John Wilson.
 ```json
 [
     {
@@ -147,6 +147,48 @@ int main()
     return 0;
 }
 ```
+
 Note that ``printNode`` is a recursive function. If the node is of type ``JsonArray`` or ``JsonObject`` 
 we iterate over each child and call printNode with the child as argument. If the node is of type
 ``JsonBool``, ``JsonNull``, ``JsonNumber`` or ``JsonString`` we print the value.
+
+### Modify a value in a JSON file and save it.
+Let's consider the JSON file **customers.json** that we had before. 
+We shall change the following values in this JSON file:
+1. James Smith has a new hobby baseball, let's add it to the list of hobbies.
+2. John Wilson got married so set the value to true.
+3. John Wilson is no longer interested in surfing so let's remove it from the list.
+```c++
+#include <iostream>
+
+#include "Json.hpp"
+
+using namespace json;
+
+int main()
+{
+    JsonDocument doc = JsonDocument::createFromFile("customers.json");
+
+    JsonArray &customers = doc.getRoot();
+
+    JsonObject &james = customers[0];
+    JsonObject &john = customers[1];
+
+    // Add "Baseball" to James's list of hobbies.
+    JsonArray &hobbies = james["hobbies"];
+    hobbies.addString("Baseball");
+
+    // Modify John Wilson so that he is married.
+    JsonBool &married = john["married"];
+    married = true;
+
+    // Remove "Surfing" from John's list of hobbies.
+    // "Surfing" is stored at index 2 in the array.
+    john["hobbies"].toArray().removeChild(2); 
+
+    // Save the changes to the JSON file.
+    doc.saveToFile("customers.json");
+
+    return 0;
+}
+```
