@@ -45,9 +45,6 @@ namespace json
         */
         class iterator
         {
-        private:
-            std::vector<std::unique_ptr<JsonNode>>::iterator it;
-
         public:
             /**
              * Creates a new iterator object.
@@ -68,6 +65,9 @@ namespace json
              * Returns the element that the iterator object is referring to.
             */
             JsonNode &operator*();
+
+        private:
+            std::vector<std::unique_ptr<JsonNode>>::iterator it;
         };
 
         /**

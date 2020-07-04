@@ -56,9 +56,6 @@ namespace json
         */
         class iterator
         {
-        private:
-            std::unordered_map<std::string, Value>::iterator it;
-
         public:
             /**
              * Creates a new iterator object.
@@ -79,6 +76,9 @@ namespace json
              * Returns the pair that the iterator object is referring to.
             */
             std::pair<const std::string &, JsonNode &> operator*();
+
+        private:
+            std::unordered_map<std::string, Value>::iterator it;
         };
 
         /**
