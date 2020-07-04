@@ -99,3 +99,54 @@ Now to a problem that is a bit more difficult. In the previous task we knew the 
 
 If we have never seen the JSON file but still want to print all its contents, we can do so by using the abstract base class ``JsonNode`` and the method ``getType()``. 
 With the help of the ``getType()`` method we can determine if the node is an array, object, bool, number, string or null value at runtime.
+```c++
+#include <iostream>
+
+#include "Json.hpp"
+
+using namespace json;
+
+void printNode(JsonNode &node)
+{
+    switch (node.getType())
+    {
+    case JsonNodeType::Array:
+        for (auto &child : node.toArray())
+            printNode(child);
+        break;
+    case JsonNodeType::Object:
+        // This will print all children of the object in seemingly random order.
+        // If you want the children sorted based on insertion order
+        // you can write for(auto &pair : node.toObject().sort()) instead.
+        for (auto pair : node.toObject())
+            printNode(pair.second);
+        break;
+    case JsonNodeType::Bool:
+        std::cout << (node.toBool() ? "true" : "false") << std::endl;
+        break;
+    case JsonNodeType::Null:
+        std::cout << "null" << std::endl;
+        break;
+    case JsonNodeType::Number:
+        std::cout << node.toNumber() << std::endl;
+        break;
+    case JsonNodeType::String:
+        std::cout << node.toString() << std::endl;
+        break;
+    }
+}
+
+int main()
+{
+    JsonDocument doc = JsonDocument::createFromFile("unknown.json");
+
+    JsonNode &root = doc.getRoot();
+
+    printNode(root);
+
+    return 0;
+}
+```
+Note that ``printNode`` is a recursive function. If the node is of type ``JsonArray`` or ``JsonObject`` 
+we iterate over each child and call printNode with the child as argument. If the node is of type
+``JsonBool``, ``JsonNull``, ``JsonNumber`` or ``JsonString`` we print the value.
