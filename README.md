@@ -35,7 +35,7 @@ Down below you can see that the file contains information about two people James
         "lastName": "Smith",
         "age": 40,
         "married": true,
-        "hobbies": ["Golf", "football"]
+        "hobbies": ["Golf", "Football"]
     },
     {
         "firstName": "John",
@@ -152,7 +152,7 @@ Note that ``printNode`` is a recursive function. If the node is of type ``JsonAr
 we iterate over each child and call printNode with the child as argument. If the node is of type
 ``JsonBool``, ``JsonNull``, ``JsonNumber`` or ``JsonString`` we print the value.
 
-### Modify a value in a JSON file and save it.
+### Modify a value in a JSON file and save it
 Let's consider the JSON file **customers.json** that we had before. 
 We shall change the following values in this JSON file:
 1. James Smith has a new hobby baseball, let's add it to the list of hobbies.
@@ -187,6 +187,54 @@ int main()
     john["hobbies"].toArray().removeChild(2); 
 
     // Save the changes to the JSON file.
+    doc.saveToFile("customers.json");
+
+    return 0;
+}
+```
+
+### Create a JSON document in a program and save it to a file
+It's possible to create a JSON document within a program and save it to a file.
+Down below is code that will generate a JSON document that is equivalent to the JSON file **customers.json** (defined above).
+```c++
+#include <iostream>
+
+#include "Json.hpp"
+
+using namespace json;
+
+int main()
+{
+    // Create an empty document without a root.
+    JsonDocument doc;
+
+    // Set an array as root (James and John will be stored inside this array).
+    JsonArray &customers = doc.setArrayAsRoot();
+
+    // Create James and John.
+    JsonObject &james = customers.addObject();
+    JsonObject &john = customers.addObject();
+
+    // Add members to James. 
+    james.setString("firstName", "James");
+    james.setString("lastName", "Smith");
+    james.setNumber("age", 40);
+    james.setBool("married", true);
+    JsonArray &jamesHobbies = james.setArray("hobbies");
+    jamesHobbies.addString("Golf");
+    jamesHobbies.addString("Football");
+
+    // Add members to John.
+    john.setString("firstName", "John");
+    john.setString("lastName", "Wilson");
+    john.setNumber("age", 32);
+    john.setBool("married", false);
+    JsonArray &johnHobbies = john.setArray("hobbies");
+    johnHobbies.addString("Basketball");
+    johnHobbies.addString("Skiing");
+    johnHobbies.addString("Surfing");
+
+    // Save this document to a file.
     doc.saveToFile("customers.json");
 
     return 0;
