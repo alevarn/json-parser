@@ -86,7 +86,7 @@ namespace json
     {
         JsonToken current = JsonLexer::nextToken(input);
 
-        // Check if the the JsonArray is empty.
+        // Check if the JsonArray is empty.
         if (current.type == JsonTokenType::EndArray)
             return;
 
