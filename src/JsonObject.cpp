@@ -61,7 +61,7 @@ namespace json
     ChildType &JsonObject::setChild(const std::string &name)
     {
         std::unique_ptr<JsonNode> child = std::make_unique<ChildType>(this);
-        ChildType &ref = *child;    // We take a reference to the child before we move it into the unordered_map.
+        ChildType &ref = *child; // We take a reference to the child before we move it into the unordered_map.
         children[name] = {std::move(child), childCounter++};
         return ref;
     }
@@ -200,13 +200,22 @@ namespace json
 
     JsonObject::iterator JsonObject::iterator::operator++()
     {
-        ++it;
-        return *this;
+        return ++it;
     }
 
-    bool JsonObject::iterator::operator!=(const iterator &other)
+    JsonObject::iterator JsonObject::iterator::operator++(int)
     {
-        return it != other.it;
+        return it++;
+    }
+
+    bool JsonObject::iterator::operator!=(const iterator &rhs)
+    {
+        return it != rhs.it;
+    }
+
+    bool JsonObject::iterator::operator==(const iterator &rhs)
+    {
+        return it == rhs.it;
     }
 
     std::pair<const std::string &, JsonNode &> JsonObject::iterator::operator*()

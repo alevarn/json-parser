@@ -52,14 +52,54 @@ namespace json
             iterator(std::vector<std::unique_ptr<JsonNode>>::iterator it);
 
             /**
-             * The postfix operator will return an iterator object referring to the next element in the array.
+             * The prefix operator will return an iterator object referring to the next element in the array.
             */
             iterator operator++();
 
             /**
+             * The postfix operator will return an iterator object referring to the current element and increment itself.
+            */
+            iterator operator++(int);
+
+            /**
+             * Adds a value to the iterator object and returns the result.
+            */
+            iterator operator+(int value);
+
+            /**
+             * Subtracts a value from the iterator object and returns the result.
+            */
+            iterator operator-(int value);
+
+            /**
              * Returns true if two iterator objects are referring to different elements.
             */
-            bool operator!=(const iterator &other);
+            bool operator!=(const iterator &rhs);
+
+            /**
+             * Returns true if two iterator objects are referring to the same element.
+            */
+            bool operator==(const iterator &rhs);
+
+            /**
+             * Returns true if the iterator on the left-hand side is less than the iterator on the right hand side.
+            */
+            bool operator<(const iterator &rhs);
+
+            /**
+             * Returns true if the iterator on the left-hand side is less than or equal to the iterator on the right hand side.
+            */
+            bool operator<=(const iterator &rhs);
+
+            /**
+             * Returns true if the iterator on the left-hand side is greater than the iterator on the right hand side.
+            */
+            bool operator>(const iterator &rhs);
+
+            /**
+             * Returns true if the iterator on the left-hand side is greater than or equal to the iterator on the right hand side.
+            */
+            bool operator>=(const iterator &rhs);
 
             /**
              * Returns the element that the iterator object is referring to.

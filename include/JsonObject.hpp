@@ -63,14 +63,24 @@ namespace json
             iterator(std::unordered_map<std::string, Value>::iterator it);
 
             /**
-             * The postfix operator will return an iterator object referring to the next pair in the map.
+             * The prefix operator will return an iterator object referring to the next pair in the map.
             */
             iterator operator++();
 
             /**
+             * The postfix operator will return an iterator object referring to the current pair and increment itself.
+            */
+            iterator operator++(int);
+
+            /**
              * Returns true if two iterator objects are referring to different pairs.
             */
-            bool operator!=(const iterator &other);
+            bool operator!=(const iterator &rhs);
+
+            /**
+             * Returns true if two iterator objects are referring to the same pair.
+            */
+            bool operator==(const iterator &rhs);
 
             /**
              * Returns the pair that the iterator object is referring to.

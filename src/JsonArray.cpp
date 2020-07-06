@@ -164,13 +164,52 @@ namespace json
 
     JsonArray::iterator JsonArray::iterator::operator++()
     {
-        ++it;
-        return *this;
+        return ++it;
     }
 
-    bool JsonArray::iterator::operator!=(const iterator &other)
+    JsonArray::iterator JsonArray::iterator::operator++(int)
     {
-        return it != other.it;
+        return it++;
+    }
+
+    JsonArray::iterator JsonArray::iterator::operator+(int value)
+    {
+        return it + value;
+    }
+
+    JsonArray::iterator JsonArray::iterator::operator-(int value)
+    {
+        return it - value;
+    }
+
+    bool JsonArray::iterator::operator!=(const iterator &rhs)
+    {
+        return it != rhs.it;
+    }
+
+    bool JsonArray::iterator::operator==(const iterator &rhs)
+    {
+        return it == rhs.it;
+    }
+
+    bool JsonArray::iterator::operator<(const iterator &rhs)
+    {
+        return it < rhs.it;
+    }
+
+    bool JsonArray::iterator::operator<=(const iterator &rhs)
+    {
+        return it <= rhs.it;
+    }
+
+    bool JsonArray::iterator::operator>(const iterator &rhs)
+    {
+        return it > rhs.it;
+    }
+
+    bool JsonArray::iterator::operator>=(const iterator &rhs)
+    {
+        return it >= rhs.it;
     }
 
     JsonNode &JsonArray::iterator::operator*()
