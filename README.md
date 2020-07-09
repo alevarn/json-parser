@@ -1,5 +1,5 @@
-# A JSON parser for C++17
-This is a simplistic and lightweight JSON parser for C++17. 
+# A JSON parser for C++11
+This is a simplistic and lightweight JSON parser for C++11. 
 It works with JSON documents that follow the format specified in [RFC 8259](https://tools.ietf.org/html/rfc8259).
 
 ## How to use this library with CMake
