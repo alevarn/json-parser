@@ -56,85 +56,85 @@ namespace json
 
     JsonArray &JsonArray::addArray()
     {
-        children.push_back(std::make_unique<JsonArray>(this));
+        children.emplace_back(new JsonArray(this));
         return *children.back();
     }
 
     JsonObject &JsonArray::addObject()
     {
-        children.push_back(std::make_unique<JsonObject>(this));
+        children.emplace_back(new JsonObject(this));
         return *children.back();
     }
 
     JsonBool &JsonArray::addBool(bool value)
     {
-        children.push_back(std::make_unique<JsonBool>(this, value));
+        children.emplace_back(new JsonBool(this, value));
         return *children.back();
     }
 
     JsonNull &JsonArray::addNull()
     {
-        children.push_back(std::make_unique<JsonNull>(this));
+        children.emplace_back(new JsonNull(this));
         return *children.back();
     }
 
     JsonNumber &JsonArray::addNumber(double value)
     {
-        children.push_back(std::make_unique<JsonNumber>(this, value));
+        children.emplace_back(new JsonNumber(this, value));
         return *children.back();
     }
 
     JsonString &JsonArray::addString(const std::string &value)
     {
-        children.push_back(std::make_unique<JsonString>(this, value));
+        children.emplace_back(new JsonString(this, value));
         return *children.back();
     }
 
     JsonString &JsonArray::addString(std::string &&value)
     {
-        children.push_back(std::make_unique<JsonString>(this, std::move(value)));
+        children.emplace_back(new JsonString(this, std::move(value)));
         return *children.back();
     }
 
     JsonArray &JsonArray::setArray(size_t index)
     {
-        children[index] = std::make_unique<JsonArray>(this);
+        children[index] = std::unique_ptr<JsonArray>(new JsonArray(this));
         return *children[index];
     }
 
     JsonObject &JsonArray::setObject(size_t index)
     {
-        children[index] = std::make_unique<JsonObject>(this);
+        children[index] = std::unique_ptr<JsonObject>(new JsonObject(this));
         return *children[index];
     }
 
     JsonBool &JsonArray::setBool(size_t index, bool value)
     {
-        children[index] = std::make_unique<JsonBool>(this, value);
+        children[index] = std::unique_ptr<JsonBool>(new JsonBool(this, value));
         return *children[index];
     }
 
     JsonNull &JsonArray::setNull(size_t index)
     {
-        children[index] = std::make_unique<JsonNull>(this);
+        children[index] = std::unique_ptr<JsonNull>(new JsonNull(this));
         return *children[index];
     }
 
     JsonNumber &JsonArray::setNumber(size_t index, double value)
     {
-        children[index] = std::make_unique<JsonNumber>(this, value);
+        children[index] = std::unique_ptr<JsonNumber>(new JsonNumber(this, value));
         return *children[index];
     }
 
     JsonString &JsonArray::setString(size_t index, const std::string &value)
     {
-        children[index] = std::make_unique<JsonString>(this, value);
+        children[index] = std::unique_ptr<JsonString>(new JsonString(this, value));
         return *children[index];
     }
 
     JsonString &JsonArray::setString(size_t index, std::string &&value)
     {
-        children[index] = std::make_unique<JsonString>(this, std::move(value));
+        children[index] = std::unique_ptr<JsonString>(new JsonString(this, std::move(value)));
         return *children[index];
     }
 

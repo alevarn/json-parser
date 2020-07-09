@@ -60,7 +60,7 @@ namespace json
     template <typename ChildType>
     ChildType &JsonObject::setChild(const std::string &name)
     {
-        std::unique_ptr<JsonNode> child = std::make_unique<ChildType>(this);
+        std::unique_ptr<JsonNode> child(new ChildType(this));
         ChildType &ref = *child; // We take a reference to the child before we move it into the unordered_map.
         children[name] = {std::move(child), childCounter++};
         return ref;
@@ -69,7 +69,7 @@ namespace json
     template <typename ChildType>
     ChildType &JsonObject::setChild(std::string &&name)
     {
-        std::unique_ptr<JsonNode> child = std::make_unique<ChildType>(this);
+        std::unique_ptr<JsonNode> child(new ChildType(this));
         ChildType &ref = *child;
         children[std::move(name)] = {std::move(child), childCounter++};
         return ref;
@@ -78,7 +78,7 @@ namespace json
     template <typename ChildType, typename ArgType>
     ChildType &JsonObject::setChild(const std::string &name, ArgType arg)
     {
-        std::unique_ptr<JsonNode> child = std::make_unique<ChildType>(this, arg);
+        std::unique_ptr<JsonNode> child(new ChildType(this, arg));
         ChildType &ref = *child;
         children[name] = {std::move(child), childCounter++};
         return ref;
@@ -87,7 +87,7 @@ namespace json
     template <typename ChildType, typename ArgType>
     ChildType &JsonObject::setChild(std::string &&name, ArgType arg)
     {
-        std::unique_ptr<JsonNode> child = std::make_unique<ChildType>(this, arg);
+        std::unique_ptr<JsonNode> child(new ChildType(this, arg));
         ChildType &ref = *child;
         children[std::move(name)] = {std::move(child), childCounter++};
         return ref;
@@ -155,7 +155,7 @@ namespace json
 
     JsonString &JsonObject::setString(const std::string &name, std::string &&value)
     {
-        std::unique_ptr<JsonNode> child = std::make_unique<JsonString>(this, std::move(value));
+        std::unique_ptr<JsonNode> child(new JsonString(this, std::move(value)));
         JsonString &ref = *child;
         children[name] = {std::move(child), childCounter++};
         return ref;
@@ -163,7 +163,7 @@ namespace json
 
     JsonString &JsonObject::setString(std::string &&name, std::string &&value)
     {
-        std::unique_ptr<JsonNode> child = std::make_unique<JsonString>(this, std::move(value));
+        std::unique_ptr<JsonNode> child(new JsonString(this, std::move(value)));
         JsonString &ref = *child;
         children[std::move(name)] = {std::move(child), childCounter++};
         return ref;
@@ -244,7 +244,7 @@ namespace json
             temp.emplace_back(&pair.first, &pair.second);
 
         // Sort the array based on the insertion order.
-        std::sort(temp.begin(), temp.end(), [](const auto &left, const auto &right) {
+        std::sort(temp.begin(), temp.end(), [](const std::pair<const std::string *, Value *> &left, const std::pair<const std::string *, Value *> &right) {
             return left.second->orderIndex < right.second->orderIndex;
         });
 

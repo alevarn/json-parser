@@ -26,11 +26,11 @@ project(json-parser VERSION 1.0.0)
 
 # Make sure that the user is not using anything lower than C++17.
 if(DEFINED CMAKE_CXX_STANDARD)
-    if(NOT ${CMAKE_CXX_STANDARD} GREATER_EQUAL 17)
-        message(FATAL_ERROR "The json-parser library requires C++17")
+    if(NOT ${CMAKE_CXX_STANDARD} GREATER_EQUAL 11)
+        message(FATAL_ERROR "The json-parser library requires C++11")
     endif()
 else()
-    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD 11)
 endif()
 
 set(SRC_FILES

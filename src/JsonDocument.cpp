@@ -46,43 +46,43 @@ namespace json
 
     JsonArray &JsonDocument::setArrayAsRoot()
     {
-        root = std::make_unique<JsonArray>();
+        root = std::unique_ptr<JsonArray>(new JsonArray());
         return *root;
     }
 
     JsonObject &JsonDocument::setObjectAsRoot()
     {
-        root = std::make_unique<JsonObject>();
+        root = std::unique_ptr<JsonObject>(new JsonObject());
         return *root;
     }
 
     JsonBool &JsonDocument::setBoolAsRoot(bool value)
     {
-        root = std::make_unique<JsonBool>(value);
+        root = std::unique_ptr<JsonBool>(new JsonBool(value));
         return *root;
     }
 
     JsonNull &JsonDocument::setNullAsRoot()
     {
-        root = std::make_unique<JsonNull>();
+        root = std::unique_ptr<JsonNull>(new JsonNull());
         return *root;
     }
 
     JsonNumber &JsonDocument::setNumberAsRoot(double value)
     {
-        root = std::make_unique<JsonNumber>(value);
+        root = std::unique_ptr<JsonNumber>(new JsonNumber(value));
         return *root;
     }
 
     JsonString &JsonDocument::setStringAsRoot(const std::string &value)
     {
-        root = std::make_unique<JsonString>(value);
+        root = std::unique_ptr<JsonString>(new JsonString(value));
         return *root;
     }
 
     JsonString &JsonDocument::setStringAsRoot(std::string &&value)
     {
-        root = std::make_unique<JsonString>(std::move(value));
+        root = std::unique_ptr<JsonString>(new JsonString(std::move(value)));
         return *root;
     }
 

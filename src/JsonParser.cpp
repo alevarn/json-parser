@@ -47,27 +47,27 @@ namespace json
         switch (current.type)
         {
         case JsonTokenType::BeginArray:
-            root = std::make_unique<JsonArray>();
+            root = std::unique_ptr<JsonArray>(new JsonArray());
             parseArray(input, *root);
             break;
         case JsonTokenType::BeginObject:
-            root = std::make_unique<JsonObject>();
+            root = std::unique_ptr<JsonObject>(new JsonObject());
             parseObject(input, *root);
             break;
         case JsonTokenType::False:
-            root = std::make_unique<JsonBool>(false);
+            root = std::unique_ptr<JsonBool>(new JsonBool(false));
             break;
         case JsonTokenType::True:
-            root = std::make_unique<JsonBool>(true);
+            root = std::unique_ptr<JsonBool>(new JsonBool(true));
             break;
         case JsonTokenType::Null:
-            root = std::make_unique<JsonNull>();
+            root = std::unique_ptr<JsonNull>(new JsonNull());
             break;
         case JsonTokenType::Number:
-            root = std::make_unique<JsonBool>(std::stod(current.value));
+            root = std::unique_ptr<JsonNumber>(new JsonNumber(std::stod(current.value)));
             break;
         case JsonTokenType::String:
-            root = std::make_unique<JsonString>(std::move(current.value));
+            root = std::unique_ptr<JsonString>(new JsonString(std::move(current.value)));
             break;
         default:
             throw std::runtime_error("Illegal root value");
