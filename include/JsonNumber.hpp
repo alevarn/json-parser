@@ -66,9 +66,19 @@ namespace json
         double &data();
 
         /**
+         * Returns a const reference to the double value this JsonNumber is storing.
+        */
+        const double &data() const;
+
+        /**
          * Implicit conversion to a double reference.
         */
         operator double &();
+
+        /**
+         * Implicit conversion to a double const reference.
+        */
+        operator const double &() const;
 
     private:
         double value;

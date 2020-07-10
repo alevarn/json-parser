@@ -76,6 +76,11 @@ namespace json
         std::string &data();
 
         /**
+         * Returns a const reference to the string value this JsonString is storing.
+        */
+        const std::string &data() const;
+
+        /**
          * Will escape the string and return it. So for example a newline will be replaced with \n.
         */
         std::string escaped() const noexcept;
@@ -86,9 +91,14 @@ namespace json
         operator std::string &();
 
         /**
+         * Implicit conversion to a const string reference.
+        */
+        operator const std::string &() const;
+
+        /**
          * Implicit conversion to a const char pointer.
         */
-        operator const char *();
+        operator const char *() const;
 
     private:
         std::string value;

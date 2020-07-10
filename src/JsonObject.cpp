@@ -210,43 +210,86 @@ namespace json
         children.erase(name);
     }
 
-    JsonObject::iterator::iterator(std::unordered_map<std::string, Value>::iterator it) : it(it)
+    using iterator = JsonObject::iterator;
+
+    iterator::iterator(std::unordered_map<std::string, Value>::iterator it) : it(it)
     {
     }
 
-    JsonObject::iterator JsonObject::iterator::operator++()
+    iterator iterator::operator++()
     {
         return ++it;
     }
 
-    JsonObject::iterator JsonObject::iterator::operator++(int)
+    iterator iterator::operator++(int)
     {
         return it++;
     }
 
-    bool JsonObject::iterator::operator!=(const iterator &rhs)
+    bool iterator::operator!=(const iterator &rhs)
     {
         return it != rhs.it;
     }
 
-    bool JsonObject::iterator::operator==(const iterator &rhs)
+    bool iterator::operator==(const iterator &rhs)
     {
         return it == rhs.it;
     }
 
-    std::pair<const std::string &, JsonNode &> JsonObject::iterator::operator*()
+    std::pair<const std::string &, JsonNode &> iterator::operator*()
     {
         return {it->first, *it->second.node};
     }
 
-    JsonObject::iterator JsonObject::begin()
+    using const_iterator = JsonObject::const_iterator;
+
+    const_iterator::const_iterator(std::unordered_map<std::string, Value>::const_iterator it) : it(it)
+    {
+    }
+
+    const_iterator const_iterator::operator++()
+    {
+        return ++it;
+    }
+
+    const_iterator const_iterator::operator++(int)
+    {
+        return it++;
+    }
+
+    bool const_iterator::operator!=(const const_iterator &rhs)
+    {
+        return it != rhs.it;
+    }
+
+    bool const_iterator::operator==(const const_iterator &rhs)
+    {
+        return it == rhs.it;
+    }
+
+    std::pair<const std::string &, const JsonNode &> const_iterator::operator*() const
+    {
+        return {it->first, *it->second.node};
+    }
+
+    iterator JsonObject::begin()
     {
         return iterator(children.begin());
     }
 
-    JsonObject::iterator JsonObject::end()
+    iterator JsonObject::end()
     {
         return iterator(children.end());
+    }
+
+    const_iterator JsonObject::begin() const
+    {
+        return const_iterator(children.begin());
+    }
+
+    const_iterator JsonObject::end() const
+    {
+        return const_iterator(children.end());
     }
 
     std::vector<std::pair<const std::string &, JsonNode &>> JsonObject::sort()
@@ -270,6 +313,32 @@ namespace json
         result.reserve(children.size());
 
         for (auto &pair : temp)
+            result.emplace_back(*pair.first, *pair.second->node);
+
+        return result;
+    }
+
+    std::vector<std::pair<const std::string &, const JsonNode &>> JsonObject::sort() const
+    {
+        // Create a new vector and reserve enough space.
+        std::vector<std::pair<const std::string *, const Value *>> temp;
+        temp.reserve(children.size());
+
+        // Fill up the array.
+        for (const auto &pair : children)
+            temp.emplace_back(&pair.first, &pair.second);
+
+        // Sort the array based on the insertion order.
+        std::sort(temp.begin(), temp.end(), [](const std::pair<const std::string *, const Value *> &left, const std::pair<const std::string *, const Value *> &right) {
+            return left.second->orderIndex < right.second->orderIndex;
+        });
+
+        // We don't want to return a vector of std::pair<const std::string *, Value*>
+        // therefore we create a new vector of the type we want to return.
+        std::vector<std::pair<const std::string &, const JsonNode &>> result;
+        result.reserve(children.size());
+
+        for (const auto &pair : temp)
             result.emplace_back(*pair.first, *pair.second->node);
 
         return result;

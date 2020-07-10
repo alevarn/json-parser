@@ -154,13 +154,13 @@ namespace json
         return createFromStream(input);
     }
 
-    void JsonDocument::writeNode(std::ostream &output, JsonNode &node, std::string indent, size_t tabSize)
+    void JsonDocument::writeNode(std::ostream &output, const JsonNode &node, std::string indent, size_t tabSize)
     {
         switch (node.getType())
         {
         case JsonNodeType::Array:
         {
-            JsonArray &array = node;
+            const JsonArray &array = node;
 
             output << '[';
 
@@ -171,7 +171,7 @@ namespace json
             // Calculate new indent for child nodes.
             std::string newIndent = indent + std::string(tabSize, ' ');
 
-            for (JsonNode &child : array)
+            for (const JsonNode &child : array)
             {
                 output << newIndent;
                 writeNode(output, child, newIndent, tabSize);
@@ -189,7 +189,7 @@ namespace json
         break;
         case JsonNodeType::Object:
         {
-            JsonObject &object = node;
+            const JsonObject &object = node;
             output << '{';
 
             if (!object.empty())
@@ -199,8 +199,8 @@ namespace json
 
             // We want the pairs to be printed based on the insertion order therefore we sort the object first.
             // This is not necessary and will have a performance cost, but it's pretty and therefore we do it.
-            std::vector<std::pair<const std::string &, JsonNode &>> children = object.sort();
-            for (auto &pair : children)
+            std::vector<std::pair<const std::string &, const JsonNode &>> children = object.sort();
+            for (const auto &pair : children)
             {
                 output << newIndent << '\"' << pair.first << '\"' << ": ";
                 writeNode(output, pair.second, newIndent, tabSize);

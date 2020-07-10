@@ -66,9 +66,19 @@ namespace json
         bool &data();
 
         /**
+         * Returns a const reference to the boolean value this JsonBool is storing.
+        */
+        const bool &data() const;
+
+        /**
          * Implicit conversion to a boolean reference.
         */
         operator bool &();
+
+        /**
+         * Implicit conversion to a boolean const reference.
+        */
+        operator const bool &() const;
 
     private:
         bool value;

@@ -173,73 +173,146 @@ namespace json
         children.erase(children.begin() + index);
     }
 
-    JsonArray::iterator::iterator(std::vector<std::unique_ptr<JsonNode>>::iterator it) : it(it)
+    using iterator = JsonArray::iterator;
+
+    iterator::iterator(std::vector<std::unique_ptr<JsonNode>>::iterator it) : it(it)
     {
     }
 
-    JsonArray::iterator JsonArray::iterator::operator++()
+    iterator iterator::operator++()
     {
         return ++it;
     }
 
-    JsonArray::iterator JsonArray::iterator::operator++(int)
+    iterator iterator::operator++(int)
     {
         return it++;
     }
 
-    JsonArray::iterator JsonArray::iterator::operator+(int value)
+    iterator iterator::operator+(int value)
     {
         return it + value;
     }
 
-    JsonArray::iterator JsonArray::iterator::operator-(int value)
+    iterator iterator::operator-(int value)
     {
         return it - value;
     }
 
-    bool JsonArray::iterator::operator!=(const iterator &rhs)
+    bool iterator::operator!=(const iterator &rhs)
     {
         return it != rhs.it;
     }
 
-    bool JsonArray::iterator::operator==(const iterator &rhs)
+    bool iterator::operator==(const iterator &rhs)
     {
         return it == rhs.it;
     }
 
-    bool JsonArray::iterator::operator<(const iterator &rhs)
+    bool iterator::operator<(const iterator &rhs)
     {
         return it < rhs.it;
     }
 
-    bool JsonArray::iterator::operator<=(const iterator &rhs)
+    bool iterator::operator<=(const iterator &rhs)
     {
         return it <= rhs.it;
     }
 
-    bool JsonArray::iterator::operator>(const iterator &rhs)
+    bool iterator::operator>(const iterator &rhs)
     {
         return it > rhs.it;
     }
 
-    bool JsonArray::iterator::operator>=(const iterator &rhs)
+    bool iterator::operator>=(const iterator &rhs)
     {
         return it >= rhs.it;
     }
 
-    JsonNode &JsonArray::iterator::operator*()
+    JsonNode &iterator::operator*()
     {
         return **it;
     }
 
-    JsonArray::iterator JsonArray::begin()
+    using const_iterator = JsonArray::const_iterator;
+
+    const_iterator::const_iterator(std::vector<std::unique_ptr<JsonNode>>::const_iterator it) : it(it)
+    {
+    }
+
+    const_iterator const_iterator::operator++()
+    {
+        return ++it;
+    }
+
+    const_iterator const_iterator::operator++(int)
+    {
+        return it++;
+    }
+
+    const_iterator const_iterator::operator+(int value)
+    {
+        return it + value;
+    }
+
+    const_iterator const_iterator::operator-(int value)
+    {
+        return it - value;
+    }
+
+    bool const_iterator::operator!=(const const_iterator &rhs)
+    {
+        return it != rhs.it;
+    }
+
+    bool const_iterator::operator==(const const_iterator &rhs)
+    {
+        return it == rhs.it;
+    }
+
+    bool const_iterator::operator<(const const_iterator &rhs)
+    {
+        return it < rhs.it;
+    }
+
+    bool const_iterator::operator<=(const const_iterator &rhs)
+    {
+        return it <= rhs.it;
+    }
+
+    bool const_iterator::operator>(const const_iterator &rhs)
+    {
+        return it > rhs.it;
+    }
+
+    bool const_iterator::operator>=(const const_iterator &rhs)
+    {
+        return it >= rhs.it;
+    }
+
+    const JsonNode &const_iterator::operator*() const
+    {
+        return **it;
+    }
+
+    iterator JsonArray::begin()
     {
         return iterator(children.begin());
     }
 
-    JsonArray::iterator JsonArray::end()
+    iterator JsonArray::end()
     {
         return iterator(children.end());
+    }
+
+    const_iterator JsonArray::begin() const
+    {
+        return const_iterator(children.begin());
+    }
+
+    const_iterator JsonArray::end() const
+    {
+        return const_iterator(children.end());
     }
 
 } // namespace json

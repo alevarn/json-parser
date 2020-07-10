@@ -62,12 +62,22 @@ namespace json
         return value;
     }
 
+    const std::string &JsonString::data() const
+    {
+        return value;
+    }
+
     JsonString::operator std::string &()
     {
         return value;
     }
 
-    JsonString::operator const char *()
+    JsonString::operator const std::string &() const
+    {
+        return value;
+    }
+
+    JsonString::operator const char *() const
     {
         return value.c_str();
     }

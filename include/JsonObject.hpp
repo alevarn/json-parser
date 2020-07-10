@@ -92,6 +92,48 @@ namespace json
         };
 
         /**
+         * A const_iterator that lets the user iterate over all immutable children.
+         * The main purpose of this class is to make sure 
+         * the JsonObject can work with the range-based for loop.
+        */
+        class const_iterator
+        {
+        public:
+            /**
+             * Creates a new const_iterator object.
+            */
+            const_iterator(std::unordered_map<std::string, Value>::const_iterator it);
+
+            /**
+             * The prefix operator will return a const_iterator object referring to the next pair in the map.
+            */
+            const_iterator operator++();
+
+            /**
+             * The postfix operator will return a const_iterator object referring to the current pair and increment itself.
+            */
+            const_iterator operator++(int);
+
+            /**
+             * Returns true if two const_iterator objects are referring to different pairs.
+            */
+            bool operator!=(const const_iterator &rhs);
+
+            /**
+             * Returns true if two const_iterator objects are referring to the same pair.
+            */
+            bool operator==(const const_iterator &rhs);
+
+            /**
+             * Returns the pair that the const_iterator object is referring to.
+            */
+            std::pair<const std::string &, const JsonNode &> operator*() const;
+
+        private:
+            std::unordered_map<std::string, Value>::const_iterator it;
+        };
+
+        /**
          * Creates a new JsonObject without a parent.
         */
         JsonObject();
@@ -263,10 +305,32 @@ namespace json
         iterator end();
 
         /**
+         * Returns a const_iterator referring to the beginning.
+         * The begin() and end() methods are needed for the range-based for loop.
+         * Note that the iterator will iterate through the pairs in seemingly random order.
+         * Consider the sort() method if you would like to iterate through the pairs based on the insertion order.
+        */
+        const_iterator begin() const;
+
+        /**
+         * Returns a const_iterator referring to the end.
+         * The begin() and end() methods are needed for the range-based for loop.
+         * Note that the iterator will iterate through the pairs in seemingly random order.
+         * Consider the sort() method if you would like to iterate through the pairs based on the insertion order.
+        */
+        const_iterator end() const;
+
+        /**
          * Will move the pairs into a vector and sort the vector based on the insertion order of each pair.
          * The vector is then returned.
         */
         std::vector<std::pair<const std::string &, JsonNode &>> sort();
+
+        /**
+         * Will move the pairs into a vector and sort the vector based on the insertion order of each pair.
+         * The vector is then returned.
+        */
+        std::vector<std::pair<const std::string &, const JsonNode &>> sort() const;
 
     private:
         // In order to keep track of the insertion order we have a counter

@@ -54,7 +54,17 @@ namespace json
         return value;
     }
 
+    const double &JsonNumber::data() const
+    {
+        return value;
+    }
+
     JsonNumber::operator double &()
+    {
+        return value;
+    }
+
+    JsonNumber::operator const double &() const
     {
         return value;
     }

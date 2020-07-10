@@ -111,6 +111,78 @@ namespace json
         };
 
         /**
+         * A const_iterator that lets the user iterate over all immutable children.
+         * The main purpose of this class is to make sure 
+         * the JsonArray can work with the range-based for loop.
+        */
+        class const_iterator
+        {
+        public:
+            /**
+             * Creates a new const_iterator object.
+            */
+            const_iterator(std::vector<std::unique_ptr<JsonNode>>::const_iterator it);
+
+            /**
+             * The prefix operator will return a const_iterator object referring to the next element in the array.
+            */
+            const_iterator operator++();
+
+            /**
+             * The postfix operator will return a const_iterator object referring to the current element and increment itself.
+            */
+            const_iterator operator++(int);
+
+            /**
+             * Adds a value to the const_iterator object and returns the result.
+            */
+            const_iterator operator+(int value);
+
+            /**
+             * Subtracts a value from the const_iterator object and returns the result.
+            */
+            const_iterator operator-(int value);
+
+            /**
+             * Returns true if two const_iterator objects are referring to different elements.
+            */
+            bool operator!=(const const_iterator &rhs);
+
+            /**
+             * Returns true if two const_iterator objects are referring to the same element.
+            */
+            bool operator==(const const_iterator &rhs);
+
+            /**
+             * Returns true if the const_iterator on the left-hand side is less than the const_iterator on the right hand side.
+            */
+            bool operator<(const const_iterator &rhs);
+
+            /**
+             * Returns true if the const_iterator on the left-hand side is less than or equal to the const_iterator on the right hand side.
+            */
+            bool operator<=(const const_iterator &rhs);
+
+            /**
+             * Returns true if the const_iterator on the left-hand side is greater than the const_iterator on the right hand side.
+            */
+            bool operator>(const const_iterator &rhs);
+
+            /**
+             * Returns true if the const_iterator on the left-hand side is greater than or equal to the const_iterator on the right hand side.
+            */
+            bool operator>=(const const_iterator &rhs);
+
+            /**
+             * Returns the element that the const_iterator object is referring to.
+            */
+            const JsonNode &operator*() const;
+
+        private:
+            std::vector<std::unique_ptr<JsonNode>>::const_iterator it;
+        };
+
+        /**
          * Creates a new JsonArray without a parent.
         */
         JsonArray();
@@ -257,6 +329,18 @@ namespace json
          * The begin() and end() methods are needed for the range-based for loop.
         */
         iterator end();
+
+         /**
+         * Returns a const_iterator referring to the beginning.
+         * The begin() and end() methods are needed for the range-based for loop.
+        */
+        const_iterator begin() const;
+
+        /**
+         * Returns a const_iterator referring to the end.
+         * The begin() and end() methods are needed for the range-based for loop.
+        */
+        const_iterator end() const;
 
     private:
         std::vector<std::unique_ptr<JsonNode>> children;
