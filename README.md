@@ -140,7 +140,7 @@ void printNode(const JsonNode &node)
 int main()
 {
     JsonDocument doc = JsonDocument::createFromFile("unknown.json");
-    JsonNode &root = doc.getRoot(); 
+    const JsonNode &root = doc.getRoot(); 
     printNode(root);
     return 0;
 }
