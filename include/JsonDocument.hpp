@@ -128,7 +128,7 @@ namespace json
         static JsonDocument createFromString(const std::string &jsonText);
 
     private:
-        // Recursive method that writes a node and all its child nodes to an output stream. 
+        // Recursive method that writes a node and all its child nodes to an output stream.
         static void writeNode(std::ostream &output, const JsonNode &node, std::string indent, size_t tabSize);
 
         std::unique_ptr<JsonNode> root;

@@ -64,7 +64,7 @@ namespace json
         return value;
     }
 
-    JsonBool::operator const bool &() const 
+    JsonBool::operator const bool &() const
     {
         return value;
     }

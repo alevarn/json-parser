@@ -175,7 +175,7 @@ namespace json
             {
                 output << newIndent;
                 writeNode(output, child, newIndent, tabSize);
-                if (&child != &array[array.getChildCount() - 1])    // If last child don't print ','.
+                if (&child != &array[array.getChildCount() - 1]) // If last child don't print ','.
                     output << ',';
                 output << '\n';
             }

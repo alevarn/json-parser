@@ -302,7 +302,7 @@ namespace json
         std::string result;
 
         int code = std::stoi(hex, nullptr, 16);
-        
+
         //  We convert the UTF-16 code into UTF-8.
         //
         //  Interval                    UTF-16                          UTF-8

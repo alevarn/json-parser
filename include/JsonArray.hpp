@@ -330,7 +330,7 @@ namespace json
         */
         iterator end();
 
-         /**
+        /**
          * Returns a const_iterator referring to the beginning.
          * The begin() and end() methods are needed for the range-based for loop.
         */
