@@ -59,23 +59,24 @@ int main()
 {
     JsonDocument doc = JsonDocument::createFromFile("customers.json");
 
-    JsonArray &customers = doc.getRoot();
+    // We use a const reference to ensure that values cannot be modified.
+    const JsonArray &customers = doc.getRoot();
 
-    for (JsonObject &customer : customers)
+    for (const JsonObject &customer : customers)
     {
-        JsonString &firstName = customer["firstName"];
-        JsonString &lastName = customer["lastName"];
-        JsonNumber &age = customer["age"];
-        JsonBool &married = customer["married"];
+        const JsonString &firstName = customer["firstName"];
+        const JsonString &lastName = customer["lastName"];
+        const JsonNumber &age = customer["age"];
+        const JsonBool &married = customer["married"];
 
         std::cout << firstName << std::endl;
         std::cout << lastName << std::endl;
         std::cout << age << std::endl;
         std::cout << (married ? "Married" : "Not married") << std::endl;
 
-        JsonArray &hobbies = customer["hobbies"];
+        const JsonArray &hobbies = customer["hobbies"];
 
-        for(JsonString &hobby : hobbies)
+        for(const JsonString &hobby : hobbies)
         {
             std::cout << hobby << std::endl;
         }
@@ -89,7 +90,7 @@ Everything in the json-parser library is declared within the **json** namespace.
 The ``JsonDocument`` class will load the file **customers.json** into memory. We get the root node by using the ``getRoot()`` method on our JsonDocument object.
 
 We know that the root node will be of type JsonArray (because we saw the structure of the json file). 
-If we had made a mistake and written: ``JsonObject &customers = doc.getRoot();`` a ``std::runtime_error`` exception would be thrown. 
+If we had made a mistake and written: ``const JsonObject &customers = doc.getRoot();`` a ``std::runtime_error`` exception would be thrown. 
 
 The classes: ``JsonArray``, ``JsonObject``, ``JsonBool``, ``JsonNull``, ``JsonNumber`` and ``JsonString`` are all derived from the abstract base class ``JsonNode``.
 The json-parser library will allow implicit conversions between these types (so no cast is needed).
@@ -106,18 +107,18 @@ With the help of the ``getType()`` method we can determine if the node is an arr
 
 using namespace json;
 
-void printNode(JsonNode &node)
+void printNode(const JsonNode &node)
 {
     switch (node.getType())
     {
     case JsonNodeType::Array:
-        for (auto &child : node.toArray())
+        for (const JsonNode &child : node.toArray())
             printNode(child);
         break;
     case JsonNodeType::Object:
         // This will print all children of the object in seemingly random order.
         // If you want the children sorted based on insertion order
-        // you can write for(auto &pair : node.toObject().sort()) instead.
+        // you can write for(const auto &pair : node.toObject().sort()) instead.
         for (auto pair : node.toObject())
             printNode(pair.second);
         break;
@@ -139,11 +140,8 @@ void printNode(JsonNode &node)
 int main()
 {
     JsonDocument doc = JsonDocument::createFromFile("unknown.json");
-
-    JsonNode &root = doc.getRoot();
-
+    JsonNode &root = doc.getRoot(); 
     printNode(root);
-
     return 0;
 }
 ```
