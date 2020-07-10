@@ -131,10 +131,21 @@ namespace json
         JsonArray &toArray() override;
 
         /**
+         * Returns a const reference to this JsonArray.
+        */
+        const JsonArray &toArray() const override;
+
+        /**
          * Returns the child node at a specific index. 
          * No range checks are done so make sure the index is within the boundaries.
         */
         JsonNode &operator[](size_t index) override;
+
+        /**
+         * Returns the immutable child node at a specific index. 
+         * No range checks are done so make sure the index is within the boundaries.
+        */
+        const JsonNode &operator[](size_t index) const override;
 
         /**
          * Will add a new JsonArray object to the child collection and return a reference to the new object.
@@ -222,6 +233,13 @@ namespace json
          * This method is equivalent to the subscript operator.
         */
         JsonNode &getChild(size_t index);
+
+        /**
+         * Returns the immutable child node at a specific index. 
+         * No range checks are done so make sure the index is within the boundaries.
+         * This method is equivalent to the subscript operator.
+        */
+        const JsonNode &getChild(size_t index) const;
 
         /**
          * Removes a child node at a specific index. 

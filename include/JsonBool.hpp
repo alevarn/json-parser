@@ -56,6 +56,11 @@ namespace json
         JsonBool &toBool() override;
 
         /**
+         * Returns a const reference to this JsonBool.
+        */
+        const JsonBool &toBool() const override;
+
+        /**
          * Returns a reference to the boolean value this JsonBool is storing.
         */
         bool &data();

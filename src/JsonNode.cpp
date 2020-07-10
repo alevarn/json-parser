@@ -45,7 +45,12 @@ namespace json
         return parent != nullptr;
     }
 
-    JsonNode &JsonNode::getParent()
+    JsonNode &JsonNode::getParent() noexcept
+    {
+        return *parent;
+    }
+
+    const JsonNode &JsonNode::getParent() const noexcept
     {
         return *parent;
     }
@@ -55,7 +60,17 @@ namespace json
         throw std::runtime_error("Could not convert this object to an object of type JsonArray");
     }
 
+    const JsonArray &JsonNode::toArray() const
+    {
+        throw std::runtime_error("Could not convert this object to an object of type JsonArray");
+    }
+
     JsonObject &JsonNode::toObject()
+    {
+        throw std::runtime_error("Could not convert this object to an object of type JsonObject");
+    }
+
+    const JsonObject &JsonNode::toObject() const
     {
         throw std::runtime_error("Could not convert this object to an object of type JsonObject");
     }
@@ -65,7 +80,17 @@ namespace json
         throw std::runtime_error("Could not convert this object to an object of type JsonBool");
     }
 
+    const JsonBool &JsonNode::toBool() const
+    {
+        throw std::runtime_error("Could not convert this object to an object of type JsonBool");
+    }
+
     JsonNull &JsonNode::toNull()
+    {
+        throw std::runtime_error("Could not convert this object to an object of type JsonNull");
+    }
+
+    const JsonNull &JsonNode::toNull() const
     {
         throw std::runtime_error("Could not convert this object to an object of type JsonNull");
     }
@@ -75,7 +100,17 @@ namespace json
         throw std::runtime_error("Could not convert this object to an object of type JsonNumber");
     }
 
+    const JsonNumber &JsonNode::toNumber() const
+    {
+        throw std::runtime_error("Could not convert this object to an object of type JsonNumber");
+    }
+
     JsonString &JsonNode::toString()
+    {
+        throw std::runtime_error("Could not convert this object to an object of type JsonString");
+    }
+
+    const JsonString &JsonNode::toString() const
     {
         throw std::runtime_error("Could not convert this object to an object of type JsonString");
     }
@@ -85,7 +120,17 @@ namespace json
         return toArray();
     }
 
+    JsonNode::operator const JsonArray &() const
+    {
+        return toArray();
+    }
+
     JsonNode::operator JsonObject &()
+    {
+        return toObject();
+    }
+
+    JsonNode::operator const JsonObject &() const
     {
         return toObject();
     }
@@ -95,7 +140,17 @@ namespace json
         return toBool();
     }
 
+    JsonNode::operator const JsonBool &() const
+    {
+        return toBool();
+    }
+
     JsonNode::operator JsonNull &()
+    {
+        return toNull();
+    }
+
+    JsonNode::operator const JsonNull &() const
     {
         return toNull();
     }
@@ -105,7 +160,17 @@ namespace json
         return toNumber();
     }
 
+    JsonNode::operator const JsonNumber &() const
+    {
+        return toNumber();
+    }
+
     JsonNode::operator JsonString &()
+    {
+        return toString();
+    }
+
+    JsonNode::operator const JsonString &() const
     {
         return toString();
     }
@@ -115,7 +180,17 @@ namespace json
         throw std::runtime_error("The object is not of type JsonArray and therefore you cannot use the subscript operator to access child elements");
     }
 
+    const JsonNode &JsonNode::operator[](size_t) const
+    {
+        throw std::runtime_error("The object is not of type JsonArray and therefore you cannot use the subscript operator to access child elements");
+    }
+
     JsonNode &JsonNode::operator[](const std::string &)
+    {
+        throw std::runtime_error("The object is not of type JsonObject and therefore you cannot use the subscript operator to access child elements");
+    }
+
+    const JsonNode &JsonNode::operator[](const std::string &) const
     {
         throw std::runtime_error("The object is not of type JsonObject and therefore you cannot use the subscript operator to access child elements");
     }

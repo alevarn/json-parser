@@ -56,6 +56,11 @@ namespace json
         JsonNumber &toNumber() override;
 
         /**
+         * Returns a const reference to this JsonNumber.
+        */
+        const JsonNumber &toNumber() const override;
+
+        /**
          * Returns a reference to the double value this JsonNumber is storing.
         */
         double &data();

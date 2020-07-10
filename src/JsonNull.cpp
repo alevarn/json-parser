@@ -44,4 +44,8 @@ namespace json
         return *this;
     }
 
+    const JsonNull &JsonNull::toNull() const
+    {
+        return *this;
+    }
 } // namespace json

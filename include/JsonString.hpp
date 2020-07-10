@@ -66,6 +66,11 @@ namespace json
         JsonString &toString() override;
 
         /**
+         * Returns a const reference to this JsonString.
+        */
+        const JsonString &toString() const override;
+
+        /**
          * Returns a reference to the string value this JsonString is storing.
         */
         std::string &data();
@@ -73,7 +78,7 @@ namespace json
         /**
          * Will escape the string and return it. So for example a newline will be replaced with \n.
         */
-        std::string escaped();
+        std::string escaped() const noexcept;
 
         /**
          * Implicit conversion to a string reference.

@@ -44,6 +44,11 @@ namespace json
         return *this;
     }
 
+    const JsonNumber &JsonNumber::toNumber() const
+    {
+        return *this;
+    }
+
     double &JsonNumber::data()
     {
         return value;

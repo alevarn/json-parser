@@ -112,10 +112,21 @@ namespace json
         JsonObject &toObject() override;
 
         /**
+         * Returns a const reference to this JsonObject.
+        */
+        const JsonObject &toObject() const override;
+
+        /**
          * Returns the child node with a specific name.
          * If no child has the specified name then an error will be thrown.
         */
         JsonNode &operator[](const std::string &name) override;
+
+        /**
+         * Returns the immutable child node with a specific name.
+         * If no child has the specified name then an error will be thrown.
+        */
+        const JsonNode &operator[](const std::string &name) const override;
 
         /**
          * Will set a new JsonArray object with a specific name.
@@ -222,6 +233,13 @@ namespace json
          * This method is equivalent to the subscript operator.
         */
         JsonNode &getChild(const std::string &name);
+
+        /**
+         * Returns the immutable child node with a specific name.
+         * If no child has the specified name then an error will be thrown.
+         * This method is equivalent to the subscript operator.
+        */
+        const JsonNode &getChild(const std::string &name) const;
 
         /**
          * Removes a child node with a specific name. 

@@ -51,7 +51,18 @@ namespace json
         return *this;
     }
 
+    const JsonObject &JsonObject::toObject() const
+    {
+        return *this;
+    }
+
     JsonNode &JsonObject::operator[](const std::string &name)
+    {
+        // Can throw out_of_range exception.
+        return *children.at(name).node;
+    }
+
+    const JsonNode &JsonObject::operator[](const std::string &name) const
     {
         // Can throw out_of_range exception.
         return *children.at(name).node;
@@ -185,6 +196,11 @@ namespace json
     }
 
     JsonNode &JsonObject::getChild(const std::string &name)
+    {
+        return *children.at(name).node;
+    }
+
+    const JsonNode &JsonObject::getChild(const std::string &name) const
     {
         return *children.at(name).node;
     }

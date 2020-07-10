@@ -49,7 +49,17 @@ namespace json
         return *this;
     }
 
+    const JsonArray &JsonArray::toArray() const
+    {
+        return *this;
+    }
+
     JsonNode &JsonArray::operator[](size_t index)
+    {
+        return *children[index];
+    }
+
+    const JsonNode &JsonArray::operator[](size_t index) const
     {
         return *children[index];
     }
@@ -149,6 +159,11 @@ namespace json
     }
 
     JsonNode &JsonArray::getChild(size_t index)
+    {
+        return *children[index];
+    }
+
+    const JsonNode &JsonArray::getChild(size_t index) const
     {
         return *children[index];
     }

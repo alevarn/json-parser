@@ -54,6 +54,11 @@ namespace json
          * Returns a reference to this JsonNull.
         */
         JsonNull &toNull() override;
+
+        /**
+         * Returns a const reference to this JsonNull.
+        */
+        const JsonNull &toNull() const override;
     };
 } // namespace json
 

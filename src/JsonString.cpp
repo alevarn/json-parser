@@ -52,6 +52,11 @@ namespace json
         return *this;
     }
 
+    const JsonString &JsonString::toString() const
+    {
+        return *this;
+    }
+
     std::string &JsonString::data()
     {
         return value;
@@ -67,10 +72,10 @@ namespace json
         return value.c_str();
     }
 
-    std::string JsonString::escaped()
+    std::string JsonString::escaped() const noexcept
     {
         std::string result;
-        
+
         // Go through each character and check if one of them need to be escaped.
         for (size_t i = 0; i < value.length(); i++)
         {

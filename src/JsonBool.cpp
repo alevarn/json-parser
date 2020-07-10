@@ -44,6 +44,11 @@ namespace json
         return *this;
     }
 
+    const JsonBool &JsonBool::toBool() const
+    {
+        return *this;
+    }
+
     bool &JsonBool::data()
     {
         return value;
