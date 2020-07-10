@@ -73,12 +73,12 @@ namespace json
         /**
          * Returns a reference to the string value this JsonString is storing.
         */
-        std::string &data();
+        std::string &data() noexcept;
 
         /**
          * Returns a const reference to the string value this JsonString is storing.
         */
-        const std::string &data() const;
+        const std::string &data() const noexcept;
 
         /**
          * Will escape the string and return it. So for example a newline will be replaced with \n.

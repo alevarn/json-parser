@@ -49,12 +49,12 @@ namespace json
         return *this;
     }
 
-    double &JsonNumber::data()
+    double &JsonNumber::data() noexcept
     {
         return value;
     }
 
-    const double &JsonNumber::data() const
+    const double &JsonNumber::data() const noexcept
     {
         return value;
     }

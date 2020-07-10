@@ -63,12 +63,12 @@ namespace json
         /**
          * Returns a reference to the double value this JsonNumber is storing.
         */
-        double &data();
+        double &data() noexcept;
 
         /**
          * Returns a const reference to the double value this JsonNumber is storing.
         */
-        const double &data() const;
+        const double &data() const noexcept;
 
         /**
          * Implicit conversion to a double reference.

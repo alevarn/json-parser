@@ -49,12 +49,12 @@ namespace json
         return *this;
     }
 
-    bool &JsonBool::data()
+    bool &JsonBool::data() noexcept
     {
         return value;
     }
 
-    const bool &JsonBool::data() const
+    const bool &JsonBool::data() const noexcept
     {
         return value;
     }
@@ -64,7 +64,7 @@ namespace json
         return value;
     }
 
-    JsonBool::operator const bool &() const
+    JsonBool::operator const bool &() const 
     {
         return value;
     }

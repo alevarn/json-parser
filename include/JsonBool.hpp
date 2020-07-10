@@ -63,12 +63,12 @@ namespace json
         /**
          * Returns a reference to the boolean value this JsonBool is storing.
         */
-        bool &data();
+        bool &data() noexcept;
 
         /**
          * Returns a const reference to the boolean value this JsonBool is storing.
         */
-        const bool &data() const;
+        const bool &data() const noexcept;
 
         /**
          * Implicit conversion to a boolean reference.

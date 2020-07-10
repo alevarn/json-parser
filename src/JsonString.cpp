@@ -57,12 +57,12 @@ namespace json
         return *this;
     }
 
-    std::string &JsonString::data()
+    std::string &JsonString::data() noexcept
     {
         return value;
     }
 
-    const std::string &JsonString::data() const
+    const std::string &JsonString::data() const noexcept
     {
         return value;
     }
