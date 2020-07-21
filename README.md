@@ -57,24 +57,27 @@ using namespace json;
 
 int main()
 {
+    // Create a new JSON document from a file called "customers.json".
     JsonDocument doc = JsonDocument::createFromFile("customers.json");
 
     // We use a const reference to ensure that values cannot be modified.
     const JsonArray &customers = doc.getRoot();
-
+    
+    // We iterate over each customer in the array using a range-based for loop.
     for (const JsonObject &customer : customers)
     {
+        // We retrieve all members from the customer object.
         const JsonString &firstName = customer["firstName"];
         const JsonString &lastName = customer["lastName"];
         const JsonNumber &age = customer["age"];
         const JsonBool &married = customer["married"];
-
+        const JsonArray &hobbies = customer["hobbies"];
+        
+        // Lastly we print. 
         std::cout << firstName << std::endl;
         std::cout << lastName << std::endl;
         std::cout << age << std::endl;
         std::cout << (married ? "Married" : "Not married") << std::endl;
-
-        const JsonArray &hobbies = customer["hobbies"];
 
         for(const JsonString &hobby : hobbies)
         {
@@ -90,7 +93,7 @@ Everything in the json-parser library is declared within the **json** namespace.
 The ``JsonDocument`` class will load the file **customers.json** into memory. We get the root node by using the ``getRoot()`` method on our JsonDocument object.
 
 We know that the root node will be of type JsonArray (because we saw the structure of the json file). 
-If we had made a mistake and written: ``const JsonObject &customers = doc.getRoot();`` a ``std::runtime_error`` exception would be thrown. 
+If we had made a mistake and written: ``const JsonObject &customers = doc.getRoot();`` a ``std::runtime_error`` exception would have been thrown. 
 
 The classes: ``JsonArray``, ``JsonObject``, ``JsonBool``, ``JsonNull``, ``JsonNumber`` and ``JsonString`` are all derived from the abstract base class ``JsonNode``.
 The json-parser library will allow implicit conversions between these types (so no cast is needed).
